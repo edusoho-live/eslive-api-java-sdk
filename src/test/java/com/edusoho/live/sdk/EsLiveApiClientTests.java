@@ -75,8 +75,8 @@ public class EsLiveApiClientTests {
     @Test void memberList() {
         MemberListParams params = new MemberListParams();
         params.setRoomId(testRoom.getId());
-        params.setOffset(0L);
-        params.setLimit(10L);
+        params.setPage(0L);
+        params.setSize(20L);
         Pager<Member> members = client.memberList(params);
 
         assertEquals(0, members.getData().size());
@@ -86,8 +86,8 @@ public class EsLiveApiClientTests {
     @Test void memberListVisits() {
         MemberListVisitsParams params = new MemberListVisitsParams();
         params.setRoomId(testRoom.getId());
-        params.setOffset(0L);
-        params.setLimit(10L);
+        params.setPage(0L);
+        params.setSize(10L);
         Pager<MemberVisit> members = client.memberListVisits(params);
 
         assertEquals(0, members.getData().size());

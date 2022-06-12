@@ -9,9 +9,9 @@ public class MemberListVisitsParams implements QueryParams {
 
     private Long roomId;
 
-    private Long offset;
+    private Long page;
 
-    private Long limit;
+    private Long size;
 
     public Long getRoomId() {
         return roomId;
@@ -21,28 +21,28 @@ public class MemberListVisitsParams implements QueryParams {
         this.roomId = roomId;
     }
 
-    public Long getOffset() {
-        return offset;
+    public Long getPage() {
+        return page;
     }
 
-    public void setOffset(Long offset) {
-        this.offset = offset;
+    public void setPage(Long page) {
+        this.page = page;
     }
 
-    public Long getLimit() {
-        return limit;
+    public Long getSize() {
+        return size;
     }
 
-    public void setLimit(Long limit) {
-        this.limit = limit;
+    public void setSize(Long size) {
+        this.size = size;
     }
 
     @Override
     public Map<String, String> toQueryParams() {
         Map<String, String> params = new HashMap<>();
         params.put("roomId", roomId.toString());
-        params.put("offset", offset.toString());
-        params.put("limit", limit.toString());
+        params.put("page", page.toString());
+        params.put("size", size.toString());
 
         return params;
     }
