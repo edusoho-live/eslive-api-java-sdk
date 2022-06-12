@@ -5,6 +5,7 @@ import com.edusoho.live.sdk.common.Pager;
 import com.edusoho.live.sdk.model.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,7 +14,7 @@ public class EsLiveApiClientTests {
 
     private EsliveApiClient client;
 
-    private RoomSimple testRoom;
+    private Room testRoom;
 
     public EsLiveApiClientTests() {
         ClientConfig config = new ClientConfig();
@@ -31,7 +32,7 @@ public class EsLiveApiClientTests {
         params.setStartAt(System.currentTimeMillis() + 600000);
         params.setEndAt(System.currentTimeMillis() + 1200000);
 
-        RoomSimple room = client.roomCreate(params);
+        Room room = client.roomCreate(params);
 
         assertNotNull(room.getId());
         assertEquals(params.getName(), room.getName());
@@ -51,7 +52,7 @@ public class EsLiveApiClientTests {
         params.setStartAt(testRoom.getStartAt() + 600000);
         params.setEndAt(testRoom.getEndAt() + 600000);
 
-        RoomSimple updated = client.roomUpdate(params);
+        Room updated = client.roomUpdate(params);
 
         assertEquals(params.getName(), updated.getName());
         assertEquals(params.getStartAt(), updated.getStartAt());
@@ -59,14 +60,14 @@ public class EsLiveApiClientTests {
     }
 
     @Test void roomClose() {
-        RoomSimple room = createTestRoom();
+        Room room = createTestRoom();
         BooleanResponse closed = client.roomClose(room.getId());
 
         assertTrue(closed.getOk());
     }
 
     @Test void roomDelete() {
-        RoomSimple room = createTestRoom();
+        Room room = createTestRoom();
         BooleanResponse deleted = client.roomDelete(room.getId());
 
         assertTrue(deleted.getOk());
@@ -98,16 +99,22 @@ public class EsLiveApiClientTests {
 //        var replay = client.replayGet(testRoom.getId());
 //    }
 //
-//    @Test void replayGets() {
-//        var roomIds = List.of(1L, 2L, 3L);
-//        var replays = client.replayGets(roomIds);
-//    }
+    @Test void replayGets() {
+        ArrayList<Long> roomIds = new ArrayList<Long>();
+        roomIds.add(1L);
+        roomIds.add(2L);
+        roomIds.add(3L);
+
+        List<Replay> replays = client.replayGets(roomIds);
+
+        assertEquals(0, replays.size());
+    }
 //
 //    @Test void replayDelete() {
 //        var deleted = client.replayDelete(testRoom.getId());
 //    }
 
-    private RoomSimple createTestRoom() {
+    private Room createTestRoom() {
         RoomCreateParams params = new RoomCreateParams();
         params.setName("Java API SDK Unit Test - " + System.currentTimeMillis());
         params.setStartAt(System.currentTimeMillis() + 600000);

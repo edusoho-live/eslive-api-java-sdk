@@ -50,12 +50,12 @@ public class EsliveApiClient {
         return get("/room/get", params, Room.class);
     }
 
-    public RoomSimple roomCreate(RoomCreateParams params) {
-        return post("/room/create", params, RoomSimple.class);
+    public Room roomCreate(RoomCreateParams params) {
+        return post("/room/create", params, Room.class);
     }
 
-    public RoomSimple roomUpdate(RoomUpdateParams params) {
-        return post( "/room/update", params, RoomSimple.class);
+    public Room roomUpdate(RoomUpdateParams params) {
+        return post( "/room/update", params, Room.class);
     }
 
     public BooleanResponse roomClose(Long id) {
