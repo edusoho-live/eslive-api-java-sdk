@@ -23,10 +23,15 @@ public class EsLiveApiClientTests {
     public EsLiveApiClientTests() {
         log = LoggerFactory.getLogger(EsliveApiClient.class);
 
+        String accessKey = System.getenv("ESLIVE_ACCESS_KEY");
+        String secretKey = System.getenv("ESLIVE_SECRET_KEY");
+
+        log.info("accessKey: {}, secretKey: {}", accessKey, secretKey);
+
         ClientConfig config = new ClientConfig();
         config.setServer("live-dev.edusoho.cn");
-        config.setAccessKey("flv_self_aliyun");
-        config.setSecretKey("testSecretKey4");
+        config.setAccessKey(accessKey);
+        config.setSecretKey(secretKey);
         config.setDebug(false);
         client = new EsliveApiClient(config);
 
@@ -110,7 +115,7 @@ public class EsLiveApiClientTests {
     }
 
     @Test void replayGet() {
-        Replay replay = client.replayGet(25884L);
+        Replay replay = client.replayGet(25964L);
         log.info("replay get: {}", replay);
     }
 
@@ -118,7 +123,7 @@ public class EsLiveApiClientTests {
         ArrayList<Long> roomIds = new ArrayList<>();
         roomIds.add(1L);
         roomIds.add(2L);
-        roomIds.add(25884L);
+        roomIds.add(25964L);
 
         List<Replay> replays = client.replayGets(roomIds);
 
@@ -128,7 +133,7 @@ public class EsLiveApiClientTests {
     }
 
     @Test void replayDelete() {
-        BooleanResponse deleted = client.replayDelete(25884L);
+        BooleanResponse deleted = client.replayDelete(25964L);
 
         log.info("replay deleted: {}", deleted);
     }
