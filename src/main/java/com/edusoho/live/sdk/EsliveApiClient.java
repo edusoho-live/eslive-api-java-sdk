@@ -7,6 +7,8 @@ import com.edusoho.live.sdk.model.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -27,7 +29,7 @@ public class EsliveApiClient {
     private static final MediaType JSON_TYPE
             = MediaType.get("application/json; charset=utf-8");
 
-    private final OkHttpClient client = new OkHttpClient();
+    private final OkHttpClient client;
 
     private final Gson gson = new Gson();
 
@@ -37,10 +39,17 @@ public class EsliveApiClient {
 
     private final String server;
 
+    private Logger log;
+
     public EsliveApiClient(ClientConfig config) {
         accessKey = config.getAccessKey();
         secretKey = config.getSecretKey();
         server = Utils.isEmpty(config.getServer()) ? "live.edusoho.com" : config.getServer();
+        client = new OkHttpClient.Builder()
+                .build();
+        if (Boolean.TRUE.equals(config.getDebug())) {
+            log = LoggerFactory.getLogger(EsliveApiClient.class);
+        }
     }
 
     public Room roomGet(Long id) {
@@ -93,7 +102,7 @@ public class EsliveApiClient {
         Map<String, String> params = new HashMap<>();
         params.put("roomIds", roomIdsStr);
 
-        Type listType = new TypeToken<List<MemberVisit>>(){}.getType();
+        Type listType = new TypeToken<List<Replay>>(){}.getType();
         return get("/replay/gets", params, listType);
     }
 
@@ -104,7 +113,17 @@ public class EsliveApiClient {
     }
 
     public String roomGetEnterUrl(Long roomId, Long userId, String name, Role role) {
-        String token = JWT.create()
+        String token = generateEnterToken(roomId, userId, name, role);
+        return "https://" + server + "/h5/room/" + roomId.toString() + "/enter?token=" + token;
+    }
+
+    public String replayGetEnterUrl(Long roomId, Long userId, String name, Role role) {
+        String token = generateEnterToken(roomId, userId, name, role);
+        return "https://" + server + "/h5/replay/" + roomId.toString() + "/enter?token=" + token;
+    }
+
+    private String generateEnterToken(Long roomId, Long userId, String name, Role role) {
+        return JWT.create()
                 .withKeyId(accessKey)
                 .withIssuer("live client api")
                 .withClaim("rid", roomId)
@@ -113,8 +132,6 @@ public class EsliveApiClient {
                 .withClaim("role", role.name().toLowerCase())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1800000))
                 .sign(Algorithm.HMAC256(secretKey));
-
-        return "https://" + server + "/h5/room/" + roomId.toString() + "/enter?token=" + token;
     }
 
     private <T> T get(String uri, QueryParams params, Type responseClass) {
@@ -150,6 +167,10 @@ public class EsliveApiClient {
             req.post(RequestBody.create(body, JSON_TYPE));
         }
 
+        if (log != null) {
+            log.info("Send {} request to {}", method, url);
+        }
+
         Response response;
         try {
             response = client.newCall(req.build()).execute();
@@ -166,6 +187,10 @@ public class EsliveApiClient {
             result = response.body().string();
         } catch (IOException e) {
             throw new EsliveApiException("CLIENT_RESPONSE_FAILED", e.getMessage());
+        }
+
+        if (log != null) {
+            log.info("Received response from: {}, body: {}", url, result);
         }
 
         if (Utils.isEmpty(result)) {

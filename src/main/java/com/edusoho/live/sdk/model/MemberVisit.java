@@ -61,4 +61,16 @@ public class MemberVisit {
     public void setLeaveAt(Long leaveAt) {
         this.leaveAt = leaveAt;
     }
+
+    @Override
+    public String toString() {
+        return "MemberVisit{" +
+                "roomId=" + roomId +
+                ", userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", role='" + role + '\'' +
+                ", enterAt=" + enterAt +
+                ", leaveAt=" + leaveAt +
+                '}';
+    }
 }

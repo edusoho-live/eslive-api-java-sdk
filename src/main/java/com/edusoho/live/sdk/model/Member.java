@@ -121,4 +121,22 @@ public class Member {
     public void setWatchDuration(Long watchDuration) {
         this.watchDuration = watchDuration;
     }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "roomId=" + roomId +
+                ", userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", role='" + role + '\'' +
+                ", firstEnterAt=" + firstEnterAt +
+                ", lastEnterAt=" + lastEnterAt +
+                ", lastLeaveAt=" + lastLeaveAt +
+                ", checkinNum=" + checkinNum +
+                ", answerNum=" + answerNum +
+                ", chatNum=" + chatNum +
+                ", onlineDuration=" + onlineDuration +
+                ", watchDuration=" + watchDuration +
+                '}';
+    }
 }

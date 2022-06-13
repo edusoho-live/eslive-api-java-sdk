@@ -160,4 +160,26 @@ public class Room {
     public void setUpdatedAt(Long updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", startAt=" + startAt +
+                ", endAt=" + endAt +
+                ", actualStartAt=" + actualStartAt +
+                ", actualEndAt=" + actualEndAt +
+                ", status='" + status + '\'' +
+                ", isDeleted=" + isDeleted +
+                ", isReplayGenerated=" + isReplayGenerated +
+                ", userTotalNum=" + userTotalNum +
+                ", userEnterTotalNum=" + userEnterTotalNum +
+                ", maxOnlineNum=" + maxOnlineNum +
+                ", chatTotalNum=" + chatTotalNum +
+                ", userAvgOnlineDuration=" + userAvgOnlineDuration +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

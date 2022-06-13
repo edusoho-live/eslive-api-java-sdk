@@ -4,6 +4,8 @@ import com.edusoho.live.sdk.common.BooleanResponse;
 import com.edusoho.live.sdk.common.Pager;
 import com.edusoho.live.sdk.model.*;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,18 +14,31 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class EsLiveApiClientTests {
 
-    private EsliveApiClient client;
+    private final EsliveApiClient client;
 
-    private Room testRoom;
+    private final Room testRoom;
+
+    private final Logger log;
 
     public EsLiveApiClientTests() {
+        log = LoggerFactory.getLogger(EsliveApiClient.class);
+
         ClientConfig config = new ClientConfig();
         config.setServer("live-dev.edusoho.cn");
         config.setAccessKey("flv_self_aliyun");
         config.setSecretKey("testSecretKey4");
+        config.setDebug(false);
         client = new EsliveApiClient(config);
 
         testRoom = createTestRoom();
+    }
+
+    @Test void roomGet() {
+        Room room = client.roomGet(testRoom.getId());
+
+        log.info("room get: {}", room);
+
+        assertEquals(testRoom.getId(), room.getId());
     }
 
     @Test void roomCreate() {
@@ -34,15 +49,12 @@ public class EsLiveApiClientTests {
 
         Room room = client.roomCreate(params);
 
+        log.info("room created {}", room);
+
         assertNotNull(room.getId());
         assertEquals(params.getName(), room.getName());
         assertEquals(params.getStartAt(), room.getStartAt());
         assertEquals(params.getEndAt(), room.getEndAt());
-    }
-
-    @Test void roomGet() {
-        Room room = client.roomGet(testRoom.getId());
-        assertEquals(testRoom.getId(), room.getId());
     }
 
     @Test void roomUpdate() {
@@ -53,6 +65,8 @@ public class EsLiveApiClientTests {
         params.setEndAt(testRoom.getEndAt() + 600000);
 
         Room updated = client.roomUpdate(params);
+
+        log.info("room updated {}", updated);
 
         assertEquals(params.getName(), updated.getName());
         assertEquals(params.getStartAt(), updated.getStartAt());
@@ -95,24 +109,45 @@ public class EsLiveApiClientTests {
         assertEquals(0, members.getTotal());
     }
 
-//    @Test void replayGet() {
-//        var replay = client.replayGet(testRoom.getId());
-//    }
-//
+    @Test void replayGet() {
+        Replay replay = client.replayGet(25884L);
+        log.info("replay get: {}", replay);
+    }
+
     @Test void replayGets() {
-        ArrayList<Long> roomIds = new ArrayList<Long>();
+        ArrayList<Long> roomIds = new ArrayList<>();
         roomIds.add(1L);
         roomIds.add(2L);
-        roomIds.add(3L);
+        roomIds.add(25884L);
 
         List<Replay> replays = client.replayGets(roomIds);
 
-        assertEquals(0, replays.size());
+        log.info("replay gets: {}", replays);
+
+        assertEquals(1, replays.size());
     }
-//
-//    @Test void replayDelete() {
-//        var deleted = client.replayDelete(testRoom.getId());
-//    }
+
+    @Test void replayDelete() {
+        BooleanResponse deleted = client.replayDelete(25884L);
+
+        log.info("replay deleted: {}", deleted);
+    }
+
+    @Test void roomGetEnterUrl() {
+        String url = client.roomGetEnterUrl(testRoom.getId(), 1L, "Test", Role.VIEWER);
+
+        log.info("room get enter url: {}", url);
+
+        assertNotNull(url);
+    }
+
+    @Test void replayGetEnterUrl() {
+        String url = client.replayGetEnterUrl(testRoom.getId(), 1L, "Test", Role.VIEWER);
+
+        log.info("replay get enter url: {}", url);
+
+        assertNotNull(url);
+    }
 
     private Room createTestRoom() {
         RoomCreateParams params = new RoomCreateParams();

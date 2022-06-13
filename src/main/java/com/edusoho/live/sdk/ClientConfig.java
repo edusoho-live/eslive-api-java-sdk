@@ -8,6 +8,8 @@ public class ClientConfig {
 
     private String secretKey;
 
+    private Boolean debug;
+
     public String getServer() {
         return server;
     }
@@ -30,5 +32,13 @@ public class ClientConfig {
 
     public void setSecretKey(String secretKey) {
         this.secretKey = secretKey;
+    }
+
+    public Boolean getDebug() {
+        return debug;
+    }
+
+    public void setDebug(Boolean debug) {
+        this.debug = debug;
     }
 }
