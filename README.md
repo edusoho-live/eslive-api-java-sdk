@@ -2,16 +2,19 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.edusoho.live/eslive-api-java-sdk.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.edusoho.live%22%20AND%20a:%22eslive-api-java-sdk%22)
 
-EduSoho 大班课直播，开发文档参见： [https://live.edusoho.com/developer/](https://live.edusoho.com/developer/) 。
+EduSoho 大班课直播 - 服务端API Java SDK
 
-
-## Release
-
-STEP 1: 修改 pom.xml 版本号 `<version>...</version>`;
-
-STEP 2: 修改 `EsliveApiClient.userAgent` 版本号；
-
-STEP 3: Release
-```shell
-./mvnw clean deploy -P release
+## 引入 SDK 包
 ```
+<dependency>
+    <groupId>com.edusoho.live</groupId>
+    <artifactId>eslive-api-java-sdk</artifactId>
+    <version>1.0.2</version>
+</dependency>
+```
+
+可在 [https://mvnrepository.com/artifact/com.edusoho.live/eslive-api-java-sdk](https://mvnrepository.com/artifact/com.edusoho.live/eslive-api-java-sdk) 查看最新的 SDK 版本。
+
+## 开发文档
+
+参见： [https://live.edusoho.com/developer/api.html](https://live.edusoho.com/developer/api.html) 。
