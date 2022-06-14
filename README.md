@@ -2,7 +2,7 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.edusoho.live/eslive-api-java-sdk.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.edusoho.live%22%20AND%20a:%22eslive-api-java-sdk%22)
 
-EduSoho 大班课直播 - 服务端API Java SDK
+EduSoho 大班课直播 - 服务端 API Java SDK
 
 ## 引入 SDK 包
 ```
@@ -12,8 +12,6 @@ EduSoho 大班课直播 - 服务端API Java SDK
     <version>1.0.2</version>
 </dependency>
 ```
-
-可在 [https://mvnrepository.com/artifact/com.edusoho.live/eslive-api-java-sdk](https://mvnrepository.com/artifact/com.edusoho.live/eslive-api-java-sdk) 查看最新的 SDK 版本。
 
 ## 开发文档
 
