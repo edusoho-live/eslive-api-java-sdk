@@ -52,6 +52,40 @@ public class EsliveApiClient {
         }
     }
 
+    public MemberBundle memberBundleCreate(String name) {
+        Map<String, String> params = new HashMap<>();
+        params.put("name", name);
+
+        return post("/memberGroup/createBundle", params, MemberBundle.class);
+    }
+
+    public MemberGroup memberGroupCreate(GroupCreateParams params) {
+        return post("/memberGroup/create", params, MemberGroup.class);
+    }
+
+    public List<MemberGroup> memberGroupBatchCreate(GroupBatchCreateParams params) {
+        Type listType = new TypeToken<List<MemberGroup>>(){}.getType();
+        return post("/memberGroup/batchCreate", params, listType);
+    }
+
+    public MemberGroup memberGroupUpdate(MemberGroup params) {
+        return post("/memberGroup/updateName", params, MemberGroup.class);
+    }
+
+    public BooleanResponse memberGroupDelete(String no) {
+        Map<String, String> params = new HashMap<>();
+        params.put("no", no);
+
+        return post("/memberGroup/delete", params, BooleanResponse.class);
+    }
+
+    public BooleanResponse memberGroupBatchDelete(List<String> nos) {
+        Map<String, List<String>> params = new HashMap<>();
+        params.put("nos", nos);
+
+        return post("/memberGroup/batchDelete", params, BooleanResponse.class);
+    }
+
     public Room roomGet(Long id) {
         Map<String, String> params = new HashMap<>();
         params.put("id", id.toString());

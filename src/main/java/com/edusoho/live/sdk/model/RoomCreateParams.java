@@ -7,6 +7,8 @@ public class RoomCreateParams {
 
     private Long endAt;
 
+    private Long groupBundleNo;
+
     public String getName() {
         return name;
     }
@@ -19,6 +21,10 @@ public class RoomCreateParams {
         return startAt;
     }
 
+    public Long getGroupBundleNo() {
+        return groupBundleNo;
+    }
+
     public void setStartAt(Long startAt) {
         this.startAt = startAt;
     }
@@ -29,5 +35,9 @@ public class RoomCreateParams {
 
     public void setEndAt(Long endAt) {
         this.endAt = endAt;
+    }
+
+    public void setGroupBundleNo(Long groupBundleNo) {
+        this.groupBundleNo = groupBundleNo;
     }
 }
