@@ -15,4 +15,12 @@ public class GroupBatchCreateParams {
     public List<String> getNames() {
         return names;
     }
+
+    public void setBundleNo(Long bundleNo) {
+        this.bundleNo = bundleNo;
+    }
+
+    public void setNames(List<String> names) {
+        this.names = names;
+    }
 }

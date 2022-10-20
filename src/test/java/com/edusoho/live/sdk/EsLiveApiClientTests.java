@@ -38,6 +38,101 @@ public class EsLiveApiClientTests {
         testRoom = createTestRoom();
     }
 
+    @Test void bundleCreate() {
+        String name = "Java API SDK Unit Test Bundle - " + System.currentTimeMillis();
+        MemberBundle bundle = client.memberBundleCreate(name);
+
+        log.info("bundle create: {}", bundle);
+
+        assertNotNull(bundle.getNo());
+        assertEquals(bundle.getName(), name);
+    }
+
+    @Test void groupCreate() {
+        MemberBundle bundle = client.memberBundleCreate("Java API SDK Unit Test Bundle - " + System.currentTimeMillis());
+
+        GroupCreateParams params = new GroupCreateParams();
+        params.setName("Java API SDK Unit Test Group - " + System.currentTimeMillis());
+        params.setBundleNo(bundle.getNo());
+        MemberGroup group = client.memberGroupCreate(params);
+
+        log.info("group create: {}", group);
+
+        assertNotNull(group.getNo());
+        assertEquals(params.getName(), group.getName());
+    }
+
+    @Test void groupBatchCreate() {
+        MemberBundle bundle = client.memberBundleCreate("Java API SDK Unit Test Bundle - " + System.currentTimeMillis());
+
+        List<String> names = new ArrayList<>();
+        names.add("Java API SDK Unit Test Group 1");
+        names.add("Java API SDK Unit Test Group 2");
+        names.add("Java API SDK Unit Test Group 3");
+        names.add("Java API SDK Unit Test Group 4");
+        names.add("Java API SDK Unit Test Group 5");
+        GroupBatchCreateParams params = new GroupBatchCreateParams();
+        params.setNames(names);
+        params.setBundleNo(bundle.getNo());
+        List<MemberGroup> groups = client.memberGroupBatchCreate(params);
+
+        log.info("group create: {}", groups);
+
+        assertEquals(groups.size(), names.size());
+    }
+
+    @Test void groupUpdate() {
+        MemberBundle bundle = client.memberBundleCreate("Java API SDK Unit Test Bundle - " + System.currentTimeMillis());
+        GroupCreateParams params = new GroupCreateParams();
+        params.setName("Java API SDK Unit Test Group - " + System.currentTimeMillis());
+        params.setBundleNo(bundle.getNo());
+        MemberGroup group = client.memberGroupCreate(params);
+
+        MemberGroup updateParams = new MemberGroup();
+        updateParams.setNo(group.getNo());
+        updateParams.setName("Java API SDK Unit Test Group Update Name");
+        MemberGroup updateGroup = client.memberGroupUpdate(updateParams);
+
+        log.info("group update: {}", updateGroup);
+
+        assertEquals(updateGroup.getNo(), group.getNo());
+        assertEquals(updateGroup.getName(), updateParams.getName());
+    }
+
+    @Test void groupDelete() {
+        MemberBundle bundle = client.memberBundleCreate("Java API SDK Unit Test Bundle - " + System.currentTimeMillis());
+        GroupCreateParams params = new GroupCreateParams();
+        params.setName("Java API SDK Unit Test Group - " + System.currentTimeMillis());
+        params.setBundleNo(bundle.getNo());
+        MemberGroup group = client.memberGroupCreate(params);
+
+        BooleanResponse response = client.memberGroupDelete(group.getNo());
+
+        assertTrue(response.getOk());
+    }
+
+    @Test void groupBatchDelete() {
+        MemberBundle bundle = client.memberBundleCreate("Java API SDK Unit Test Bundle - " + System.currentTimeMillis());
+        List<String> names = new ArrayList<>();
+        names.add("Java API SDK Unit Test Group 1");
+        names.add("Java API SDK Unit Test Group 2");
+        names.add("Java API SDK Unit Test Group 3");
+        names.add("Java API SDK Unit Test Group 4");
+        names.add("Java API SDK Unit Test Group 5");
+        GroupBatchCreateParams params = new GroupBatchCreateParams();
+        params.setNames(names);
+        params.setBundleNo(bundle.getNo());
+        List<MemberGroup> groups = client.memberGroupBatchCreate(params);
+
+        List<String> nos = new ArrayList<>();
+        for (MemberGroup g : groups) {
+            nos.add(g.getNo());
+        }
+        BooleanResponse response = client.memberGroupBatchDelete(nos);
+
+        assertTrue(response.getOk());
+    }
+
     @Test void roomGet() {
         Room room = client.roomGet(testRoom.getId());
 
