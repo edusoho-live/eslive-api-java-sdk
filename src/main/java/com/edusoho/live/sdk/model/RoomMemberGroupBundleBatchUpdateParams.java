@@ -6,21 +6,21 @@ public class RoomMemberGroupBundleBatchUpdateParams {
 
     private Long memberGroupBundleNo;
 
-    private List<Long> roomIds;
+    private List<Long> ids;
 
     public Long getMemberGroupBundleNo() {
         return memberGroupBundleNo;
     }
 
-    public List<Long> getRoomIds() {
-        return roomIds;
+    public List<Long> getIds() {
+        return ids;
     }
 
     public void setMemberGroupBundleNo(Long memberGroupBundleNo) {
         this.memberGroupBundleNo = memberGroupBundleNo;
     }
 
-    public void setRoomIds(List<Long> roomIds) {
-        this.roomIds = roomIds;
+    public void setIds(List<Long> ids) {
+        this.ids = ids;
     }
 }

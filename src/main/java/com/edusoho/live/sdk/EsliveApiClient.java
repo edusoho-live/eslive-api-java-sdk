@@ -24,7 +24,7 @@ public class EsliveApiClient {
 
     private static final String GET = "GET";
 
-    private static final String userAgent = "ESLiveApiJavaSDK/1.0.2";
+    private static final String userAgent = "ESLiveApiJavaSDK/1.0.3";
 
     private static final MediaType JSON_TYPE
             = MediaType.get("application/json; charset=utf-8");

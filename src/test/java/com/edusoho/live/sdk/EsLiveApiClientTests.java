@@ -138,7 +138,7 @@ public class EsLiveApiClientTests {
         params.setMemberGroupBundleNo(4L);
         List<Long> ids = new ArrayList<>();
         ids.add(testRoom.getId());
-        params.setRoomIds(ids);
+        params.setIds(ids);
         BooleanResponse response = client.roomMemberGroupBundleBatchUpdate(params);
 
         assertTrue(response.getOk());
