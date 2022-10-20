@@ -52,7 +52,7 @@ public class EsliveApiClient {
         }
     }
 
-    public MemberBundle memberBundleCreate(String name) {
+    public MemberBundle memberGroupBundleCreate(String name) {
         Map<String, String> params = new HashMap<>();
         params.put("name", name);
 
@@ -84,6 +84,10 @@ public class EsliveApiClient {
         params.put("nos", nos);
 
         return post("/memberGroup/batchDelete", params, BooleanResponse.class);
+    }
+
+    public BooleanResponse roomMemberGroupBundleBatchUpdate(RoomMemberGroupBundleBatchUpdateParams params) {
+        return post("/room/batchUpdateMemberGroupBundle", params, BooleanResponse.class);
     }
 
     public Room roomGet(Long id) {

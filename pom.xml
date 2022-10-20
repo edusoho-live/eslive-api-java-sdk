@@ -6,7 +6,7 @@
 
   <groupId>com.edusoho.live</groupId>
   <artifactId>eslive-api-java-sdk</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
 
   <name>eslive-api-java-sdk</name>
   <description>EduSoho大班课，服务端API Java SDK。</description>

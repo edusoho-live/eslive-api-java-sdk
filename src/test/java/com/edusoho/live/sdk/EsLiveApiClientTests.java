@@ -40,7 +40,7 @@ public class EsLiveApiClientTests {
 
     @Test void bundleCreate() {
         String name = "Java API SDK Unit Test Bundle - " + System.currentTimeMillis();
-        MemberBundle bundle = client.memberBundleCreate(name);
+        MemberBundle bundle = client.memberGroupBundleCreate(name);
 
         log.info("bundle create: {}", bundle);
 
@@ -49,7 +49,7 @@ public class EsLiveApiClientTests {
     }
 
     @Test void groupCreate() {
-        MemberBundle bundle = client.memberBundleCreate("Java API SDK Unit Test Bundle - " + System.currentTimeMillis());
+        MemberBundle bundle = client.memberGroupBundleCreate("Java API SDK Unit Test Bundle - " + System.currentTimeMillis());
 
         GroupCreateParams params = new GroupCreateParams();
         params.setName("Java API SDK Unit Test Group - " + System.currentTimeMillis());
@@ -63,7 +63,7 @@ public class EsLiveApiClientTests {
     }
 
     @Test void groupBatchCreate() {
-        MemberBundle bundle = client.memberBundleCreate("Java API SDK Unit Test Bundle - " + System.currentTimeMillis());
+        MemberBundle bundle = client.memberGroupBundleCreate("Java API SDK Unit Test Bundle - " + System.currentTimeMillis());
 
         List<String> names = new ArrayList<>();
         names.add("Java API SDK Unit Test Group 1");
@@ -82,7 +82,7 @@ public class EsLiveApiClientTests {
     }
 
     @Test void groupUpdate() {
-        MemberBundle bundle = client.memberBundleCreate("Java API SDK Unit Test Bundle - " + System.currentTimeMillis());
+        MemberBundle bundle = client.memberGroupBundleCreate("Java API SDK Unit Test Bundle - " + System.currentTimeMillis());
         GroupCreateParams params = new GroupCreateParams();
         params.setName("Java API SDK Unit Test Group - " + System.currentTimeMillis());
         params.setBundleNo(bundle.getNo());
@@ -100,7 +100,7 @@ public class EsLiveApiClientTests {
     }
 
     @Test void groupDelete() {
-        MemberBundle bundle = client.memberBundleCreate("Java API SDK Unit Test Bundle - " + System.currentTimeMillis());
+        MemberBundle bundle = client.memberGroupBundleCreate("Java API SDK Unit Test Bundle - " + System.currentTimeMillis());
         GroupCreateParams params = new GroupCreateParams();
         params.setName("Java API SDK Unit Test Group - " + System.currentTimeMillis());
         params.setBundleNo(bundle.getNo());
@@ -112,7 +112,7 @@ public class EsLiveApiClientTests {
     }
 
     @Test void groupBatchDelete() {
-        MemberBundle bundle = client.memberBundleCreate("Java API SDK Unit Test Bundle - " + System.currentTimeMillis());
+        MemberBundle bundle = client.memberGroupBundleCreate("Java API SDK Unit Test Bundle - " + System.currentTimeMillis());
         List<String> names = new ArrayList<>();
         names.add("Java API SDK Unit Test Group 1");
         names.add("Java API SDK Unit Test Group 2");
@@ -129,6 +129,17 @@ public class EsLiveApiClientTests {
             nos.add(g.getNo());
         }
         BooleanResponse response = client.memberGroupBatchDelete(nos);
+
+        assertTrue(response.getOk());
+    }
+
+    @Test void roomMemberGroupBundleBatchUpdate() {
+        RoomMemberGroupBundleBatchUpdateParams params = new RoomMemberGroupBundleBatchUpdateParams();
+        params.setMemberGroupBundleNo(4L);
+        List<Long> ids = new ArrayList<>();
+        ids.add(testRoom.getId());
+        params.setRoomIds(ids);
+        BooleanResponse response = client.roomMemberGroupBundleBatchUpdate(params);
 
         assertTrue(response.getOk());
     }
